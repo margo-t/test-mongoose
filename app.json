@@ -1,8 +1,8 @@
 {
-  "name": "hello-mongoose",
-  "description": "MongoDB with Mongoose on Node.js example",
+  "name": "health-owl-restful-api",
+  "description": "MongoDB with Mongoose on Node.js for Health Owl apps",
   "image": "heroku/nodejs",
-  "repository": "https://github.com/mongolab/hello-mongoose.git",
+  "repository": "https://github.com/margo-t/health-owl-restful-api",
   "keywords": ["node", "mongoose", "ODM"],
   "addons": ["mongolab"]
 }
