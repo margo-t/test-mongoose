@@ -1,4 +1,6 @@
 var SERVER_NAME = 'patient-api'
+var DEFAULT_PORT = 5000
+var DEFAULT_HOST = '127.0.0.1'
 //
 // Preamble
 var http = require ('http');	     // For serving a basic web page.
@@ -12,7 +14,8 @@ var uristring =
 
 // The http server will listen to an appropriate port, or default to
 // port 5000.
-var theport = process.env.PORT || 5000;
+var ipaddress = process.env.IP; // TODO: figure out which IP to use for the heroku
+var port = process.env.PORT || DEFAULT_PORT;
 
 // Makes connection asynchronously.  Mongoose will queue up database
 // operations and release them when the connection is complete.
