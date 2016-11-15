@@ -11,7 +11,14 @@ var mongoose = require ("mongoose"); // The reason for this demo.
 var uristring =
   //process.env.MONGODB_URI ||
   'mongodb://admin:admin@ds147167.mlab.com:47167/heroku_f55jkc5j';
-  mongoose.connect('mongodb://localhost/myapp');
+  mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log ('Successfully connected to: ' + uristring);
+  }
+});
+
 
 // The http server will listen to an appropriate port, or default to
 // port 5000
