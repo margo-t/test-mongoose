@@ -12,7 +12,8 @@
   "license": "MIT",
   "dependencies": {
     "mongoose": ">=4.1.11",
-    "restify": "latest"
+    "restify": "latest",
+    "pm2": "latest"
   },
   "changelog" : [{"0.0.0": "Initial release"},
 		             {"0.1.0": "Update to Mongoose 3.5.7; new MongoClient semantics"},
