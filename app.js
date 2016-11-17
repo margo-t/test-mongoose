@@ -3,6 +3,7 @@ var DEFAULT_PORT = 5000
 var DEFAULT_HOST = '127.0.0.1'
 //
 // Preamble
+var pm2 = require('pm2');
 var http = require ('http');	     // For serving a basic web page.
 var mongoose = require ("mongoose"); // The reason for this demo.
 
