@@ -219,7 +219,6 @@ server.post('/patients/:id/records', function (req, res, next) {
 		heartBeat: req.params.heartBeat,
 		bloodOxygen: req.params.bloodOxygen,
 		allergies: req.params.allergies,
-		urine: req.params.urine,
 		nausea: req.params.nausea,
 		appetite: req.params.Appetite,
 		painArea: req.params.PainArea,
@@ -269,3 +268,48 @@ server.get('/patients/:id/records/:id', function (req, res, next) {
       res.send(result);
     });
 })
+
+// Update a patient by his ID
+server.put('/patients/:id', function (req, res, next) {
+
+var query = {_id: req.params.id};
+
+Patient.findByIdAndUpdate(query, { $set: { firstName: req.params.firstName,
+                                           lastName: req.params.lastName,
+                                           gender: req.params.gender,
+                                           cellPhoneNumber: req.params.cellPhoneNumber,
+                                           healthInsuranceNumber: req.params.healthInsuranceNumber,
+                                           address: req.params.address,
+                                           dateOfBirth: req.params.dateOfBirth,
+                                           department: req.params.department,
+                                           doctor: req.params.doctor }} ,{new:true}, function (err, result){
+        if (err) return res.send(500, {error: err});
+        return res.send("Successfully updated");
+        });
+})
+
+
+// Update a patient's record by its ID
+server.put('/patients/:id/records/:id', function (req, res, next) {
+
+var query = {_id: req.params.id};
+Record.findByIdAndUpdate(query, { $set: { date: req.params.date,
+		                                      doctorId: req.params.doctorId,
+		                                      tempreture: req.params.tempreture,
+		                                      bloodPressure: req.params.bloodPressure,
+		                                      respiration: req.params.respiration,
+		                                      heartBeat: req.params.heartBeat,
+		                                      bloodOxygen: req.params.bloodOxygen,
+		                                      allergies: req.params.allergies,
+		                                      nausea: req.params.nausea,
+		                                      appetite: req.params.Appetite,
+		                                      painArea: req.params.PainArea,
+		                                      painLevel: req.params.PainLevel,
+		                                      medications: req.params.Medications,
+		                                      visitReason: req.params.visitReason,
+		                                      healthBackground: req.params.healthBackground,
+		                                      emergencyLevel: req.params.emergencyLevel }} ,{new:true}, function (err, result){
+                   if (err) return res.send(500, {error: err});
+                   return res.send("Successfully updated");
+                     });
+      })
