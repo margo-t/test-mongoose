@@ -233,8 +233,8 @@ server.post('/appointments', function (req, res, next) {
 
   // Creating new appointment.
   var newAppointment = new Appointment({
-    patientName: req.params.firstName,
-    patientId: req.params.lastName,
+    patientName: req.params.patientName,
+    patientId: req.params.patientId,
     date: req.params.date,
     time: req.params.time,
     comments: req.params.comments
