@@ -207,8 +207,6 @@ server.get('/patients/hi/:healthInsuranceNumber', function (req, res, next) {
 })
 
 
-
-
 //POST
 // Create a new appointment
 server.post('/appointments', function (req, res, next) {
@@ -223,6 +221,15 @@ server.post('/appointments', function (req, res, next) {
     // If there are any errors, pass them to next in the correct format
     return next(new restify.InvalidArgumentError('time must be supplied'))
   }
+  if (req.params.patientName === undefined) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('patientName must be supplied'))
+  }
+  if (req.params.patientId === undefined) {
+      // If there are any errors, pass them to next in the correct format
+      return next(new restify.InvalidArgumentError('patientId must be supplied'))
+    }
+
 
   // Creating new appointment.
   var newAppointment = new Appointment({
