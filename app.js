@@ -59,10 +59,19 @@ var recordSchema = new mongoose.Schema({
     emergencyLevel: String,
 });
 
+var appointmentSchema = new mongoose.Schema({
+		patientName: String,
+		patientId: String,
+		date: String,
+		time: String,
+		comments: String
+});
+
 // Compiles the schema into a model, opening (or creating, if
 // nonexistent) the 'Patients' collection in the MongoDB database
 var Patient = mongoose.model('Patient', patientSchema);
 var Record = mongoose.model('Record', recordSchema);
+var Appointment = mongoose.model('Appointment', appointmentSchema);
 
 var restify = require('restify')
   // Create the restify server
@@ -93,6 +102,9 @@ var restify = require('restify')
   console.log('%s/patients/:id/records method: POST', server.url);
   console.log('%s/patients/:id/records method: GET', server.url);
   console.log('%s/patients/:id/records/:id method: GET', server.url);
+
+  console.log('%s/appointments method: POST', server.url);
+  console.log('%s/appointments method: GET', server.url);
 
 
 
@@ -193,6 +205,79 @@ server.get('/patients/hi/:healthInsuranceNumber', function (req, res, next) {
   })
 
 })
+
+
+
+
+//POST
+// Create a new appointment
+server.post('/appointments', function (req, res, next) {
+  console.log("**                                   **");
+  console.log('Processed Request --> POST request: appointments');
+  // Make sure name is defined
+  if (req.params.date === undefined) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('date must be supplied'))
+  }
+  if (req.params.time === undefined) {
+    // If there are any errors, pass them to next in the correct format
+    return next(new restify.InvalidArgumentError('time must be supplied'))
+  }
+
+  // Creating new appointment.
+  var newAppointment = new Appointment({
+    patientName: req.params.firstName,
+    patientId: req.params.lastName,
+    date: req.params.date,
+    time: req.params.time,
+    comments: req.params.comments
+  });
+
+
+  // Create the patient and saving to db
+  newAppointment.save(function (error, result) {
+
+    // If there are any errors, pass them to next in the correct format
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+    // Send the patient if no issues
+    res.send(201, result)
+  })
+})
+
+//GET
+// Get all patients in the system
+server.get('/appointments', function (req, res, next) {
+  console.log('GET request: appointments');
+  // Find every entity within the given collection
+  Appointment.find({}).exec(function (error, result) {
+    if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+    res.send(result);
+  });
+})
+
+
+// Get a single appointment by id
+server.get('/appointments/:id', function (req, res, next) {
+  console.log("**                                   **");
+  console.log('Processed Request --> GET request: appointments/' + req.params.id);
+
+  // Find a single patient by their id
+  Appointment.find({ _id: req.params.id }).exec(function (error, patient) {
+    // If there are any errors, pass them to next in the correct format
+    //if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+    if (appointment) {
+      // Send the patient if no issues
+      res.send(appointment)
+    } else {
+      // Send 404 header if the patient doesn't exist
+      res.send(404)
+    }
+  })
+})
+
+
 
 //POST - RECORDS
 // Create a new record
