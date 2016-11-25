@@ -61,6 +61,7 @@ var recordSchema = new mongoose.Schema({
 
 var appointmentSchema = new mongoose.Schema({
 		patientName: String,
+    ohip: String,
 		patientId: String,
 		date: String,
 		time: String,
@@ -105,6 +106,7 @@ var restify = require('restify')
 
   console.log('%s/appointments method: POST', server.url);
   console.log('%s/appointments method: GET', server.url);
+
 
 
 
@@ -237,6 +239,7 @@ server.post('/appointments', function (req, res, next) {
     patientId: req.params.patientId,
     date: req.params.date,
     time: req.params.time,
+    ohip: req.params.ohip,
     comments: req.params.comments
   });
 
