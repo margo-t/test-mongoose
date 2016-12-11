@@ -239,7 +239,7 @@ server.post('/appointments', function (req, res, next) {
     time: req.params.time,
     ohip: req.params.ohip,
     comments: req.params.comments,
-    record: req.params.record;
+    record: req.params.record
   });
 
 
