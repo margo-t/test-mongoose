@@ -286,6 +286,25 @@ server.get('/appointments/:id', function (req, res, next) {
   })
 })
 
+// Update an appointment by its ID
+server.put('/appointments/:id', function (req, res, next) {
+
+var query = {_id: req.params.id};
+
+Appointment.findByIdAndUpdate(query, { $set: {
+                                           patientName: req.params.patientName,
+                                           patientId: req.params.patientId,
+                                           date: req.params.date,
+                                           time: req.params.time,
+                                           ohip: req.params.ohip,
+                                           comments: req.params.comments,
+                                           record: req.params.record
+                                                }} ,{new:true}, function (err, result){
+        if (err) return res.send(500, {error: err});
+        return res.send("Successfully updated");
+        });
+})
+
 
 
 //POST - RECORDS
