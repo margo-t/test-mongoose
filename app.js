@@ -272,7 +272,7 @@ server.get('/appointments/:id', function (req, res, next) {
   console.log('Processed Request --> GET request: appointments/' + req.params.id);
 
   // Find a single patient by their id
-  Appointment.find({ _id: req.params.id }).exec(function (error, patient) {
+  Appointment.find({ _id: req.params.id }).exec(function (error, appointment) {
     // If there are any errors, pass them to next in the correct format
     //if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
 
