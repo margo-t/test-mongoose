@@ -65,7 +65,8 @@ var appointmentSchema = new mongoose.Schema({
 		patientId: String,
 		date: String,
 		time: String,
-		comments: String
+		comments: String,
+    record: Object
 });
 
 // Compiles the schema into a model, opening (or creating, if
@@ -106,9 +107,6 @@ var restify = require('restify')
 
   console.log('%s/appointments method: POST', server.url);
   console.log('%s/appointments method: GET', server.url);
-
-
-
 
 })
 
@@ -240,7 +238,8 @@ server.post('/appointments', function (req, res, next) {
     date: req.params.date,
     time: req.params.time,
     ohip: req.params.ohip,
-    comments: req.params.comments
+    comments: req.params.comments,
+    record: req.params.record;
   });
 
 
