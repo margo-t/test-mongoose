@@ -69,11 +69,17 @@ var appointmentSchema = new mongoose.Schema({
     record: Object
 });
 
+var userSchema = new mongoose.Schema({
+		login: String,
+    password: String
+});
+
 // Compiles the schema into a model, opening (or creating, if
 // nonexistent) the 'Patients' collection in the MongoDB database
 var Patient = mongoose.model('Patient', patientSchema);
 var Record = mongoose.model('Record', recordSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
+var User = mongoose.model('User', userSchema);
 
 var restify = require('restify')
   // Create the restify server
@@ -100,13 +106,14 @@ var restify = require('restify')
   console.log('%s/patients method: GET', server.url);
   console.log('%s/patients/:id method: GET', server.url);
   console.log('%s/patients/hi/:healthInsuranceNumber method: GET', server.url);
-
+/*
   console.log('%s/patients/:id/records method: POST', server.url);
   console.log('%s/patients/:id/records method: GET', server.url);
   console.log('%s/patients/:id/records/:id method: GET', server.url);
-
+*/
   console.log('%s/appointments method: POST', server.url);
   console.log('%s/appointments method: GET', server.url);
+  console.log('%s/appointments method: PUT', server.url);
 
 })
 
@@ -425,4 +432,49 @@ Record.findByIdAndUpdate(query, { $set: { date: req.params.date,
                    if (err) return res.send(500, {error: err});
                    return res.send("Successfully updated");
                      });
+      })
+
+
+      //POST
+      // Create a new user
+      server.post('/users', function (req, res, next) {
+        console.log("**                                   **");
+        console.log('Processed Request --> POST request: users');
+        // Make sure name is defined
+        if (req.params.login === undefined) {
+          // If there are any errors, pass them to next in the correct format
+          return next(new restify.InvalidArgumentError('login must be supplied'))
+        }
+        if (req.params.password === undefined) {
+          // If there are any errors, pass them to next in the correct format
+          return next(new restify.InvalidArgumentError('password must be supplied'))
+        }
+
+        // Creating new patient.
+        var newUser = new User({
+          login: req.params.login,
+          password: req.params.password
+        });
+
+
+        // Create the patient and saving to db
+        newUser.save(function (error, result) {
+
+          // If there are any errors, pass them to next in the correct format
+          if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+
+          // Send the patient if no issues
+          res.send(201, result)
+        })
+      })
+
+      //GET
+      // Get all patients in the system
+      server.get('/users', function (req, res, next) {
+        console.log('GET request: users');
+        // Find every entity within the given collection
+        User.find({}).exec(function (error, result) {
+          if (error) return next(new restify.InvalidArgumentError(JSON.stringify(error.errors)))
+          res.send(result);
+        });
       })
