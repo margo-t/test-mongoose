@@ -8,6 +8,7 @@ var mongoose = require ("mongoose"); // The reason for this demo.
 
 // Here we find an appropriate database to connect to, defaulting to
 // localhost if we don't find one.
+
 var uristring =
   //process.env.MONGODB_URI ||
   'mongodb://admin:admin@ds147167.mlab.com:47167/heroku_f55jkc5j';
@@ -40,24 +41,7 @@ var patientSchema = new mongoose.Schema({
 		doctor: String
 });
 
-var recordSchema = new mongoose.Schema({
-		date: String,
-		doctorId: String,
-		tempreture: String,
-		bloodPressure: String,
-		respiration: String,
-		heartBeat: String,
-    bloodOxygen: String,
-    allergies: String,
-    nausea: String,
-    appetite: String,
-    painArea: String,
-    painLevel: String,
-    medications: String,
-    visitReason: String,
-    healthBackground: String,
-    emergencyLevel: String,
-});
+
 
 var appointmentSchema = new mongoose.Schema({
 		patientName: String,
@@ -66,6 +50,8 @@ var appointmentSchema = new mongoose.Schema({
 		date: String,
 		time: String,
 		comments: String,
+    areaOfpain: String,
+    levelOfpain: String,
     record: Object
 });
 
@@ -75,7 +61,7 @@ var userSchema = new mongoose.Schema({
 });
 
 // Compiles the schema into a model, opening (or creating, if
-// nonexistent) the 'Patients' collection in the MongoDB database
+// nonexistent) the 'Patients' w in the MongoDB database
 var Patient = mongoose.model('Patient', patientSchema);
 var Record = mongoose.model('Record', recordSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
@@ -246,7 +232,10 @@ server.post('/appointments', function (req, res, next) {
     time: req.params.time,
     ohip: req.params.ohip,
     comments: req.params.comments,
-    record: req.params.record
+    record: req.params.record,
+    record: req.params.record,
+    areaOfpain: req.params.areaOfpain,
+    levelOfpain: req.params.levelOfpain
   });
 
 
@@ -305,7 +294,9 @@ Appointment.findByIdAndUpdate(query, { $set: {
                                            time: req.params.time,
                                            ohip: req.params.ohip,
                                            comments: req.params.comments,
-                                           record: req.params.record
+                                           record: req.params.record,
+                                           areaOfpain: req.params.areaOfpain,
+                                           levelOfpain: req.params.levelOfpain
                                                 }} ,{new:true}, function (err, result){
         if (err) return res.send(500, {error: err});
         return res.send("Successfully updated");
