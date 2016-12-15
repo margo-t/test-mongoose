@@ -52,7 +52,12 @@ var appointmentSchema = new mongoose.Schema({
 		comments: String,
     record: Object,
     areaOfpain: String,
-    levelOfpain: String
+    levelOfpain: String,
+    department: String,
+    reason: String,
+    hbr: String,
+    bp: String
+
 });
 
 var userSchema = new mongoose.Schema({
@@ -234,9 +239,12 @@ server.post('/appointments', function (req, res, next) {
     comments: req.params.comments,
     record: req.params.record,
     areaOfpain: req.params.areaOfpain,
-    levelOfpain: req.params.levelOfpain
+    levelOfpain: req.params.levelOfpain,
+    department: req.params.department,
+    reason: req.params.reason,
+    hbr: req.params.hbr,
+    bp: req.params.bp,
   });
-
 
   // Create the patient and saving to db
   newAppointment.save(function (error, result) {
@@ -295,28 +303,11 @@ Appointment.findByIdAndUpdate(query, { $set: {
                                            comments: req.params.comments,
                                            record: req.params.record,
                                            areaOfpain: req.params.areaOfpain,
-                                           levelOfpain: req.params.levelOfpain
-                                                }} ,{new:true}, function (err, result){
-        if (err) return res.send(500, {error: err});
-        return res.send("Successfully updated");
-        });
-})
-
-// Update an appointment by its ID
-server.put('/appointments/:id', function (req, res, next) {
-
-var query = {_id: req.params.id};
-
-Appointment.findByIdAndUpdate(query, { $set: {
-                                           patientName: req.params.patientName,
-                                           patientId: req.params.patientId,
-                                           date: req.params.date,
-                                           time: req.params.time,
-                                           ohip: req.params.ohip,
-                                           comments: req.params.comments,
-                                           record: req.params.record,
-                                           areaOfpain: req.params.areaOfpain,
-                                           levelOfpain: req.params.levelOfpain
+                                           levelOfpain: req.params.levelOfpain,
+                                           department: req.params.department,
+                                           reason: req.params.reason,
+                                           hbr: req.params.hbr,
+                                           bp: req.params.bp,
                                                 }} ,{new:true}, function (err, result){
         if (err) return res.send(500, {error: err});
         return res.send("Successfully updated");
