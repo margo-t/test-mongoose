@@ -54,6 +54,7 @@ var appointmentSchema = new mongoose.Schema({
     areaOfpain: String,
     levelOfpain: String,
     department: String,
+    tempreture: String,
     reason: String,
     hbr: String,
     bp: String
@@ -241,6 +242,7 @@ server.post('/appointments', function (req, res, next) {
     areaOfpain: req.params.areaOfpain,
     levelOfpain: req.params.levelOfpain,
     department: req.params.department,
+    tempreture: req.params.tempreture,
     reason: req.params.reason,
     hbr: req.params.hbr,
     bp: req.params.bp,
@@ -305,6 +307,7 @@ Appointment.findByIdAndUpdate(query, { $set: {
                                            areaOfpain: req.params.areaOfpain,
                                            levelOfpain: req.params.levelOfpain,
                                            department: req.params.department,
+                                           tempreture: req.params.tempreture,
                                            reason: req.params.reason,
                                            hbr: req.params.hbr,
                                            bp: req.params.bp,
