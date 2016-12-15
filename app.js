@@ -50,9 +50,9 @@ var appointmentSchema = new mongoose.Schema({
 		date: String,
 		time: String,
 		comments: String,
+    record: Object,
     areaOfpain: String,
-    levelOfpain: String,
-    record: Object
+    levelOfpain: String
 });
 
 var userSchema = new mongoose.Schema({
@@ -63,7 +63,7 @@ var userSchema = new mongoose.Schema({
 // Compiles the schema into a model, opening (or creating, if
 // nonexistent) the 'Patients' w in the MongoDB database
 var Patient = mongoose.model('Patient', patientSchema);
-var Record = mongoose.model('Record', recordSchema);
+//var Record = mongoose.model('Record', recordSchema);
 var Appointment = mongoose.model('Appointment', appointmentSchema);
 var User = mongoose.model('User', userSchema);
 
@@ -233,7 +233,6 @@ server.post('/appointments', function (req, res, next) {
     ohip: req.params.ohip,
     comments: req.params.comments,
     record: req.params.record,
-    record: req.params.record,
     areaOfpain: req.params.areaOfpain,
     levelOfpain: req.params.levelOfpain
   });
@@ -307,7 +306,7 @@ Appointment.findByIdAndUpdate(query, { $set: {
 
 //POST - RECORDS
 // Create a new record
-server.post('/patients/:id/records', function (req, res, next) {
+/*server.post('/patients/:id/records', function (req, res, next) {
 
     console.log("**                                   **");
     console.log("Processed Request --> Create new record");
@@ -379,7 +378,7 @@ server.get('/patients/:id/records/:id', function (req, res, next) {
       res.send(result);
     });
 })
-
+*/
 // Update a patient by his ID
 server.put('/patients/:id', function (req, res, next) {
 
@@ -401,7 +400,7 @@ Patient.findByIdAndUpdate(query, { $set: { firstName: req.params.firstName,
 
 
 // Update a patient's record by its ID
-server.put('/patients/:id/records/:id', function (req, res, next) {
+/*server.put('/patients/:id/records/:id', function (req, res, next) {
 
 var query = {_id: req.params.id};
 Record.findByIdAndUpdate(query, { $set: { date: req.params.date,
@@ -425,7 +424,7 @@ Record.findByIdAndUpdate(query, { $set: { date: req.params.date,
                      });
       })
 
-
+*/
       //POST
       // Create a new user
       server.post('/users', function (req, res, next) {
